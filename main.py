@@ -5,12 +5,27 @@ from streamlit_chat import message
 from langchain.chains import ConversationChain
 from langchain.llms import OpenAI
 
+import pinecone
+import os
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Pinecone
+
+embeddings = OpenAIEmbeddings()
+
+pinecone.init(
+    api_key=str(os.environ['PINECONE_API_KEY']),  
+    environment=str(os.environ['PINECONE_ENV'])  
+)index_name = str(os.environ['PINECONE_INDEX_NAME'])
+
+#def load_chain():
+#    """Logic for loading the chain you want to use should go here."""
+#    llm = OpenAI(temperature=0)
+#    chain = ConversationChain(llm=llm)
+#    return chain
 
 def load_chain():
-    """Logic for loading the chain you want to use should go here."""
-    llm = OpenAI(temperature=0)
-    chain = ConversationChain(llm=llm)
-    return chain
+    docsearch = Pinecone.from_existing_index(index_name, embeddings)
+    return docsearch
 
 chain = load_chain()
 
