@@ -47,8 +47,12 @@ def get_text():
 
 user_input = get_text()
 
+#if user_input:
+#   output = chain.run(input=user_input)
+
 if user_input:
-    output = chain.run(input=user_input)
+   docs = chain.similarity_search(user_input)
+   output = docs[0].page_content
 
     st.session_state.past.append(user_input)
     st.session_state.generated.append(output)
