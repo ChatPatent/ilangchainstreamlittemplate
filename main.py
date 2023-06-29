@@ -15,7 +15,8 @@ embeddings = OpenAIEmbeddings()
 pinecone.init(
     api_key=str(os.environ['PINECONE_API_KEY']),  
     environment=str(os.environ['PINECONE_ENV'])  
-)index_name = str(os.environ['PINECONE_INDEX_NAME'])
+)
+index_name = str(os.environ['PINECONE_INDEX_NAME'])
 
 #def load_chain():
 #    """Logic for loading the chain you want to use should go here."""
@@ -54,8 +55,8 @@ if user_input:
    docs = chain.similarity_search(user_input)
    output = docs[0].page_content
 
-    st.session_state.past.append(user_input)
-    st.session_state.generated.append(output)
+st.session_state.past.append(user_input)
+st.session_state.generated.append(output)
 
 if st.session_state["generated"]:
 
